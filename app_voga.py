@@ -37,22 +37,25 @@ st.markdown("""
         margin-bottom: 30px;
     }
     .metric-card {
-        background-color: #f0f2f6;
+        background-color: #161b22;
         padding: 20px;
         border-radius: 10px;
         margin: 10px 0;
+        border: 1px solid #30363d;
     }
     .alert-critical {
-        background-color: #ffcccc;
+        background-color: #3d1f1f;
         padding: 15px;
         border-radius: 5px;
         border-left: 5px solid #ff0000;
+        color: #ff6b6b;
     }
     .alert-warning {
-        background-color: #fff3cd;
+        background-color: #3d3a1f;
         padding: 15px;
         border-radius: 5px;
         border-left: 5px solid #ffc107;
+        color: #ffd700;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -62,10 +65,10 @@ col1, col2, col3 = st.columns([1, 2, 1])
 with col2:
     try:
         st.image("assets/logo.png", width=200)
-    except:
-        st.write("📊")
+    except Exception as e:
+        st.write("📊 Carteira VOGA")
     st.markdown("<h1 style='text-align: center; color: #1f77b4;'>Carteira VOGA</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align: center; color: #666;'>Análise Profissional de Carteiras de Investimentos</p>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center; color: #c9d1d9;'>Análise Profissional de Carteiras de Investimentos</p>", unsafe_allow_html=True)
 
 st.markdown("---")
 
@@ -156,7 +159,10 @@ else:
             assessor_selecionado = st.selectbox("🧑‍💼 Filtrar por Assessor", assessores)
         
         with col2:
-            classes = ['Todos'] + sorted(df_consolidado['classe_ativo'].unique().tolist())
+            classes_unicas = df_consolidado['classe_ativo'].unique().tolist()
+            # Converter para string e remover NaN
+            classes_unicas = [str(c) for c in classes_unicas if pd.notna(c)]
+            classes = ['Todos'] + sorted(set(classes_unicas))
             classe_selecionada = st.selectbox("📂 Filtrar por Classe", classes)
         
         # Aplicar filtros
@@ -368,4 +374,4 @@ else:
         )
 
 st.markdown("---")
-st.markdown("<p style='text-align: center; color: #999; font-size: 12px;'>Carteira VOGA © 2026 - Análise de Carteiras de Investimentos</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: #666; font-size: 12px;'>Carteira VOGA © 2026 - Análise de Carteiras de Investimentos</p>", unsafe_allow_html=True)
